@@ -17,11 +17,6 @@
     ErrElem = document.getElementById("err")
 </script>
 <script>
-navigator.serviceworker.register('/test/firebase-messaging-sw.js')
-.then((registration) => {
-  messaging.useServiceworker(registration);
-});
-
     // Initialize Firebase
   var config = {
     apiKey: "AIzaSyBWh30UWMXn9VsAtJksJQeOhn37ISr72yE",
@@ -34,9 +29,18 @@ navigator.serviceworker.register('/test/firebase-messaging-sw.js')
     firebase.initializeApp(config);
 
     const messaging = firebase.messaging();
+	
     messaging
         .requestPermission()
         .then(function () {
+		
+			navigator.serviceWorker.register('/test/firebase-messaging-sw.js')
+			.then((registration) => {
+			  messaging.useServiceWorker(registration);
+
+			  // Request permission and get token.....
+			});
+		
             MsgElem.innerHTML = "Notification permission granted."
             console.log("Notification permission granted.");
 
