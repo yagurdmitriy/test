@@ -17,6 +17,11 @@
     ErrElem = document.getElementById("err")
 </script>
 <script>
+navigator.serviceworker.register('/test/firebase-messaging-sw.js')
+.then((registration) => {
+  messaging.useServiceworker(registration);
+});
+
     // Initialize Firebase
   var config = {
     apiKey: "AIzaSyBWh30UWMXn9VsAtJksJQeOhn37ISr72yE",
