@@ -1,1 +1,61 @@
-TEST
+<html>
+<head>
+    <title>test</title>
+</head>
+<body>
+<script src="https://www.gstatic.com/firebasejs/5.10.1/firebase.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/5.10.1/firebase-messaging.js"></script>
+<div id="token"></div><br><br>
+<div id="msg"></div><br><br>
+<div id="notis"></div><br><br>
+<div id="err"></div><br><br>
+<script>
+    MsgElem = document.getElementById("msg")
+    TokenElem = document.getElementById("token")
+    NotisElem = document.getElementById("notis")
+    ErrElem = document.getElementById("err")
+</script>
+<script>
+    // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBWh30UWMXn9VsAtJksJQeOhn37ISr72yE",
+    authDomain: "test1-6fb28.firebaseapp.com",
+    databaseURL: "https://test1-6fb28.firebaseio.com",
+    projectId: "test1-6fb28",
+    storageBucket: "test1-6fb28.appspot.com",
+    messagingSenderId: "899267258268"
+  };
+    firebase.initializeApp(config);
+
+    const messaging = firebase.messaging();
+    messaging
+        .requestPermission()
+        .then(function () {
+            MsgElem.innerHTML = "Notification permission granted."
+            console.log("Notification permission granted.");
+
+            // get the token in the form of promise
+            return messaging.getToken()
+        })
+        .then(function(token) {
+			console.log(token);
+		
+			
+            // print the token on the HTML page
+            TokenElem.innerHTML = "token is : " + token
+        })
+        .catch(function (err) {
+            ErrElem.innerHTML = ErrElem.innerHTML + "; " + err
+            console.log("Unable to get permission to notify.", err);
+        });
+		
+		 messaging.onMessage(function(payload) {
+            console.log("Message received. ", payload);
+            NotisElem.innerHTML = NotisElem.innerHTML + JSON.stringify(payload) 
+        });
+
+</script>
+<h1>test</h1>
+</body>
+</html>
