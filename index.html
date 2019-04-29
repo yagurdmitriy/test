@@ -30,16 +30,17 @@
 
     const messaging = firebase.messaging();
 	
-    messaging
-        .requestPermission()
-        .then(function () {
-		
-			navigator.serviceWorker.register('/test/firebase-messaging-sw.js')
+	
+	
+				navigator.serviceWorker.register('/test/firebase-messaging-sw.js')
 			.then((registration) => {
 			  messaging.useServiceWorker(registration);
 
-			  // Request permission and get token.....
-			});
+			      messaging
+        .requestPermission()
+        .then(function () {
+		
+
 		
             MsgElem.innerHTML = "Notification permission granted."
             console.log("Notification permission granted.");
@@ -63,6 +64,10 @@
             console.log("Message received. ", payload);
             NotisElem.innerHTML = NotisElem.innerHTML + JSON.stringify(payload) 
         });
+			});
+	
+	
+
 
 </script>
 <h1>test</h1>
